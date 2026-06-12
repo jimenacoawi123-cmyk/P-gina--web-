@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reduciendo nuestra Huella - EPO 165</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-dark: #1B5E20;
+            --secondary: #81C784;
+            --accent: #FFB300;
+            --accent-dark: #FF8F00;
+            --background: #F1F8E9;
+            --surface: #FFFFFF;
+            --text-primary: #1B3A1B;
+            --text-secondary: #4A6B4A;
+            --shadow: 0 4px 20px rgba(46, 125, 50, 0.15);
+            --shadow-hover: 0 8px 30px rgba(46, 125, 50, 0.25);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, #E8F5E9 100%);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER & NAV ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+        }
+        nav ul li a:hover,
+        nav ul li a.active {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 179, 0, 0.4);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid transparent;
+            padding: 0.6rem 2rem 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-btn:hover,
+        .dropdown-btn.active {
+            background: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        .dropdown-btn::after {
+            content: '▾';
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown.active .dropdown-btn::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;            background: var(--surface);
+            min-width: 260px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            z-index: 1001;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--background);
+            color: var(--primary);
+            border-left-color: var(--accent);
+            padding-left: 1.8rem;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .seccion {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .seccion.activa {
+            display: block;        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            color: white;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .hero-logo {
+            width: 180px;
+            height: 180px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem auto;
+            font-size: 4rem;
+            border: 4px solid var(--accent);
+        }
+
+        /* ===== CARDS & CONTENT ===== */
+        .card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 1.5rem 0;            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card.highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-left-color: var(--accent);
+        }
+
+        .card.highlight p,
+        .card.highlight li {
+            color: rgba(255,255,255,0.95);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-dark);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+
+        h3 {
+            color: var(--primary);
+            margin: 1.2rem 0 0.8rem;
+            font-weight: 600;
+        }
+
+        p, ul, ol {
+            margin: 0.8rem 0;
+            color: var(--text-secondary);
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        /* ===== GRID SYSTEM ===== */        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tree-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid var(--secondary);
+        }
+
+        .tree-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--accent);
+        }
+
+        .tree-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tree-card-content {
+            padding: 1.5rem;
+        }
+
+        .tree-card h4 {
+            color: var(--primary-dark);
+            margin: 0 0 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .tree-card .fact {
+            background: var(--background);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            margin: 0.4rem 0;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--accent);
+            color: var(--text-primary);
+        }
+
+        /* ===== MAPS SECTION ===== */        .map-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--secondary);
+        }
+
+        .map-card h3 {
+            text-align: center;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .map-card .location-info {
+            background: var(--background);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .map-card iframe {
+            width: 100%;
+            height: 400px;
+            border: 0;
+            border-radius: 12px;
+            display: block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .map-card iframe {
+                height: 300px;
+            }
+        }
+
+        /* ===== FORM SECTION ===== */
+        .form-container {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .form-container iframe {            width: 100%;
+            max-width: 700px;
+            min-height: 900px;
+            border: 0;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-fallback {
+            display: none;
+            padding: 2rem;
+            background: #FFF3E0;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            margin-top: 1rem;
+        }
+
+        .form-fallback.active {
+            display: block;
+        }
+
+        .btn-open {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-open:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
+        }
+
+        /* ===== TABLE ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;            box-shadow: var(--shadow);
+        }
+
+        .data-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .data-table td:first-child {
+            font-weight: 600;
+            color: var(--primary-dark);
+            width: 40%;
+            background: var(--background);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 2rem 1.5rem;
+            margin-top: 3rem;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        footer h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            border: none;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        footer a:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        footer p {            color: rgba(255,255,255,0.9);
+            margin: 0.5rem 0;
+        }
+
+        /* ===== UTILITIES ===== */
+        .center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .text-accent { color: var(--accent); }
+        .text-primary { color: var(--primary); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 0.8rem 1rem;
+            }
+            
+            nav ul li a,
+            .dropdown-btn {
+                padding: 0.5rem 0.9rem;
+                font-size: 0.8rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .card, .map-card, .form-container {
+                padding: 1.5rem;
+            }
+                        .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .hero-logo {
+                width: 140px;
+                height: 140px;
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🌲</span>
+                <div class="logo-text">Reduciendo <span>nuestra Huella</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="mostrarSeccion('inicio')" class="active" id="tab-inicio">🏠 Inicio</a></li>
+                    <li><a href="#" onclick="mostrarSeccion('aculco')" id="tab-aculco">🏘️ Aculco</a></li>
+                    <li><a href="#" onclick="mostrarSeccion('sanlucas')" id="tab-sanlucas">🌿 San Lucas</a></li>
+                    <li class="dropdown" id="dropdown-menu">
+                        <button class="dropdown-btn" onclick="toggleDropdown()">Más ▾</button>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="mostrarSeccion('vivero'); closeDropdown(); return false;" id="tab-vivero">🌱 Vivero</a>
+                            <a href="#" onclick="mostrarSeccion('biodiversidad'); closeDropdown(); return false;" id="tab-biodiversidad">🦋 Biodiversidad</a>
+                            <a href="#" onclick="mostrarSeccion('mapas'); closeDropdown(); return false;" id="tab-mapas">🗺️ Mapas</a>
+                            <a href="#" onclick="mostrarSeccion('formulario'); closeDropdown(); return false;" id="tab-formulario">📝 Evaluación</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+
+        <!-- SECCIÓN INICIO -->
+        <section id="inicio" class="seccion activa">
+            <div class="hero">
+                <div class="hero-logo">🌳</div>
+                <h1>REDUCIENDO NUESTRA HUELLA</h1>
+                <p>Proyecto de reforestación y conservación ambiental de la EPO 165 - San Lucas Totolmaloya, Aculco</p>
+            </div>
+            <div class="card">
+                <h2>🌍 ¿Qué es la reforestación?</h2>
+                <p>
+                    La reforestación es el proceso de plantar árboles en áreas donde antes existían bosques 
+                    pero que han sido destruidos o degradados. En nuestro municipio de Aculco, es fundamental 
+                    plantar <strong>especies nativas</strong> que se adapten naturalmente a nuestras condiciones climáticas y de suelo.
+                </p>
+            </div>
+
+            <div class="card highlight">
+                <h3>💡 Dato Importante</h3>
+                <p>🌲 Un solo árbol puede absorber hasta <strong>22 kg de CO₂ al año</strong>. Cada árbol cuenta en la lucha contra el cambio climático.</p>
+            </div>
+
+            <div class="card">
+                <h2>✨ Importancia de la reforestación</h2>
+                <ul>
+                    <li><strong>💨 Aire limpio:</strong> Los árboles filtran contaminantes y producen oxígeno</li>
+                    <li><strong>💧 Agua:</strong> Protegen manantiales como El Limpio y El Chacón</li>
+                    <li><strong>🏔️ Suelo:</strong> Previenen la erosión y mejoran la fertilidad</li>
+                    <li><strong>🦜 Biodiversidad:</strong> Hogar de aves, mamíferos e insectos</li>
+                    <li><strong>🌡️ Clima:</strong> Regulan la temperatura y capturan carbono</li>
+                </ul>
+            </div>
+
+            <div class="card highlight">
+                <h3>⚠️ Prevención de Incendios</h3>
+                <p>🔥 Los incendios forestales son <strong>98% provocados por el ser humano</strong>. La prevención está en nuestras manos: no hagas fogatas en zonas forestales, no tires colillas y reporta actividades sospechosas.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN ACULCO -->
+        <section id="aculco" class="seccion">
+            <div class="hero" style="background: linear-gradient(135deg, #1565C0 0%, #42A5F5 100%);">
+                <h1>🏘️ Municipio de Aculco</h1>
+                <p>Conoce nuestra región y sus recursos forestales</p>
+            </div>
+
+            <div class="card">
+                <h2>📊 Datos Generales</h2>
+                <p>Aculco cuenta con aproximadamente <strong>49,000 hectáreas</strong> de terreno, de las cuales <strong>9,071 hectáreas</strong> son de uso forestal.</p>
+                
+                <table class="data-table">
+                    <tr><td>📍 Ubicación</td><td>Región noroeste del Estado de México</td></tr>
+                    <tr><td>⛰️ Altitud</td><td>2,300 msnm</td></tr>
+                    <tr><td>🌤️ Clima</td><td>Templado subhúmedo</td></tr>
+                    <tr><td>🛡️ Áreas protegidas</td><td>Parque de los Pueblos, Santuario de la Presa de La Barra</td></tr>
+                    <tr><td>🌲 Zonas forestales</td><td>Cerro de Ñadó, ejidos de los Ailes, Cozumbre de Peca, La Concepción y San Lucas Totolmaloya</td></tr>
+                </table>            </div>
+
+            <div class="card">
+                <h2>🌲 Especies Forestales de Nuestra Región</h2>
+                <p>Conoce los principales árboles que encontramos en los bosques de Aculco:</p>
+            </div>
+
+            <div class="grid">
+                <div class="tree-card">
+                    <img src="https://images.unsplash.com/photo-1542204163-1c6c6c5c6c5c?w=400" alt="Pino" onerror="this.src='https://via.placeholder.com/400x200/2E7D32/FFFFFF?text=Pino'">
+                    <div class="tree-card-content">
+                        <h4>🌲 Pino</h4>
+                        <div class="fact"><strong>Científico:</strong> Pinus spp.</div>
+                        <div class="fact"><strong>Altura:</strong> 25-40 m</div>
+                        <div class="fact"><strong>Vida:</strong> 200-300 años</div>
+                        <p><strong>Usos:</strong> Madera, construcción, prevención de erosión.</p>
+                        <p><strong>Dato:</strong> Sobreviven a incendios gracias a su corteza gruesa.</p>
+                    </div>
+                </div>
+
+                <div class="tree-card">
+                    <img src="https://images.unsplash.com/photo-1542204163-2c6c6c5c6c5c?w=400" alt="Encino" onerror="this.src='https://via.placeholder.com/400x200/8B6F47/FFFFFF?text=Encino'">
+                    <div class="tree-card-content">
+                        <h4>🌳 Encino</h4>
+                        <div class="fact"><strong>Científico:</strong> Quercus spp.</div>
+                        <div class="fact"><strong>Altura:</strong> 15-25 m</div>
+                        <div class="fact"><strong>Vida:</strong> 300-500 años</div>
+                        <p><strong>Usos:</strong> Madera dura, carbón, alimento para fauna.</p>
+                        <p><strong>Dato:</strong> Un encino puede producir +10,000 bellotas por temporada.</p>
+                    </div>
+                </div>
+
+                <div class="tree-card">
+                    <img src="https://images.unsplash.com/photo-1542204163-3c6c6c5c6c5c?w=400" alt="Ocote" onerror="this.src='https://via.placeholder.com/400x200/5D4037/FFFFFF?text=Ocote'">
+                    <div class="tree-card-content">
+                        <h4>🔥 Ocote</h4>
+                        <div class="fact"><strong>Científico:</strong> Pinus oocarpa</div>
+                        <div class="fact"><strong>Altura:</strong> 20-30 m</div>
+                        <div class="fact"><strong>Crecimiento:</strong> Muy rápido</div>
+                        <p><strong>Usos:</strong> Leña de alta calidad, antorchas naturales, resina.</p>
+                        <p><strong>Dato:</strong> Se usa como encendedor natural por su resina inflamable.</p>
+                    </div>
+                </div>
+
+                <div class="tree-card">
+                    <img src="https://images.unsplash.com/photo-1542204163-4c6c6c5c6c5c?w=400" alt="Madroño" onerror="this.src='https://via.placeholder.com/400x200/C62828/FFFFFF?text=Madroño'">
+                    <div class="tree-card-content">
+                        <h4>🍒 Madroño</h4>
+                        <div class="fact"><strong>Científico:</strong> Arbutus xalapensis</div>
+                        <div class="fact"><strong>Altura:</strong> 10-15 m</div>                        <div class="fact"><strong>Corteza:</strong> Rojiza, se desprende en láminas</div>
+                        <p><strong>Usos:</strong> Frutos comestibles, ornamental, medicina tradicional.</p>
+                        <p><strong>Dato:</strong> Su corteza se renueva anualmente como las serpientes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card highlight">
+                <h3>📅 Época de Reforestación</h3>
+                <p><strong>✅ Mejor época:</strong> Mayo a Septiembre (temporada de lluvias)</p>
+                <p>Durante esta época, los árboles jóvenes tienen <strong>85% más probabilidad de supervivencia</strong>.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN SAN LUCAS -->
+        <section id="sanlucas" class="seccion">
+            <div class="hero" style="background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);">
+                <h1>🌿 San Lucas Totolmaloya</h1>
+                <p>Nuestra comunidad comprometida con el medio ambiente</p>
+            </div>
+
+            <div class="card">
+                <h2>🏡 Nuestra Comunidad</h2>
+                <p>
+                    San Lucas Totolmaloya es una comunidad del municipio de Aculco comprometida 
+                    con el cuidado del medio ambiente. Formamos parte de los ejidos que conforman 
+                    las zonas forestales protegidas de nuestra región.
+                </p>
+            </div>
+
+            <div class="card highlight">
+                <h3>🎯 Fórmula del Éxito en Plantación</h3>
+                <p style="font-size: 1.2rem; text-align: center;">
+                    <strong>Cepa 40x40 cm</strong> + <strong>Borde de retención</strong> + <strong>Riego</strong> = 🌳 Árbol saludable
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>📋 Paso a paso para plantar correctamente</h2>
+                <ol>
+                    <li><strong>Cepa adecuada:</strong> Hoyo de 40 cm de profundidad y 40 cm de ancho. Tierra suelta y sin piedras.</li>
+                    <li><strong>Borde de retención:</strong> Crear montículo alrededor para captar agua de lluvia.</li>
+                    <li><strong>Especies nativas:</strong> Usar solo árboles adaptados (pino, encino, ocote, madroño).</li>
+                    <li><strong>Manipulación:</strong> Tomar la planta solo de la cepa, nunca del tallo.</li>
+                    <li><strong>Riego inicial:</strong> Regar inmediatamente con 10-15 litros de agua.</li>
+                    <li><strong>Mantenimiento:</strong> Revisar semanalmente durante los primeros 3 meses.</li>
+                </ol>
+            </div>
+
+            <div class="card highlight">                <h3>🏆 Logro del Ejido de los Ailes</h3>
+                <ul>
+                    <li>✅ Más de <strong>120,000 árboles</strong> reforestados en 2 años</li>
+                    <li>✅ Tasa de supervivencia: <strong>85%</strong></li>
+                    <li>✅ Especies principales: Pino, Encino y Ocote</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>❌ Errores comunes a evitar</h2>
+                <ul>
+                    <li>Plantar en época de secas (noviembre-abril)</li>
+                    <li>Hacer hoyos muy pequeños</li>
+                    <li>No compactar la tierra alrededor de la raíz</li>
+                    <li>No crear el borde de retención de agua</li>
+                    <li>Plantar especies no nativas (eucalipto, casuarina)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECCIÓN VIVERO -->
+        <section id="vivero" class="seccion">
+            <div class="hero" style="background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);">
+                <h1>🌱 Vivero y Reforestación</h1>
+                <p>Apoyo municipal para tu proyecto de reforestación</p>
+            </div>
+
+            <div class="card">
+                <h2>🏛️ Presidencia Municipal de Aculco</h2>
+                <p>
+                    La Dirección de Ecología apoya con <strong>donación de árboles</strong> para reforestación 
+                    a comunidades y ciudadanos comprometidos con el medio ambiente.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>📝 ¿Cómo solicitar árboles?</h2>
+                <ol>
+                    <li>Acudir a la <strong>oficina de partes</strong> en Presidencia Municipal</li>
+                    <li>Llenar la solicitud (requiere INE o acta de nacimiento)</li>
+                    <li>Especificar la especie nativa que necesitas</li>
+                    <li>La donación es de <strong>1 a 200 árboles</strong> por solicitud</li>
+                    <li>Recibir <strong>capacitación técnica gratuita</strong> sobre plantación</li>
+                    <li>Compromiso de plantar y dar mantenimiento por al menos 1 año</li>
+                </ol>
+            </div>
+
+            <div class="grid">
+                <div class="tree-card">
+                    <div class="tree-card-content">                        <h4>🌲 Pino Blanco</h4>
+                        <div class="fact">✅ Disponibilidad: Alta</div>
+                        <div class="fact">📈 Crecimiento: Rápido</div>
+                        <div class="fact">🔧 Cuidados: Medianos</div>
+                    </div>
+                </div>
+                <div class="tree-card">
+                    <div class="tree-card-content">
+                        <h4>🌲 Pino Colorado</h4>
+                        <div class="fact">✅ Disponibilidad: Media</div>
+                        <div class="fact">📈 Crecimiento: Medio</div>
+                        <div class="fact">🔧 Cuidados: Bajos</div>
+                    </div>
+                </div>
+                <div class="tree-card">
+                    <div class="tree-card-content">
+                        <h4>🌳 Encino Roble</h4>
+                        <div class="fact">✅ Disponibilidad: Media</div>
+                        <div class="fact">📈 Crecimiento: Lento</div>
+                        <div class="fact">🔧 Cuidados: Altos</div>
+                    </div>
+                </div>
+                <div class="tree-card">
+                    <div class="tree-card-content">
+                        <h4>🔥 Ocote</h4>
+                        <div class="fact">✅ Disponibilidad: Alta</div>
+                        <div class="fact">📈 Crecimiento: Muy rápido</div>
+                        <div class="fact">🔧 Cuidados: Bajos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card highlight">
+                <h3>♻️ Compromiso Ambiental</h3>
+                <p>Por cada árbol retirado por causas justificadas, <strong>se deben plantar 3 nuevos árboles</strong>.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN BIODIVERSIDAD -->
+        <section id="biodiversidad" class="seccion">
+            <div class="hero" style="background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%);">
+                <h1>🦋 Bosques y Biodiversidad</h1>
+                <p>Protegiendo la riqueza natural de nuestra región</p>
+            </div>
+
+            <div class="card">
+                <h2>🌊 Recursos Naturales</h2>
+                <p>
+                    Nuestra comunidad cuenta con hermosos paisajes naturales que debemos proteger. 
+                    Las cascadas y cuerpos de agua son parte vital de nuestro ecosistema forestal.                </p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>💧 Captación de Agua</h3>
+                    <p>Un bosque maduro puede captar hasta <strong>8,000 litros de agua por hectárea al día</strong>. Los bosques funcionan como esponjas naturales que alimentan manantiales y ríos.</p>
+                </div>
+                <div class="card">
+                    <h3>🦜 Biodiversidad</h3>
+                    <p>Los bosques nativos albergan más del <strong>80% de la biodiversidad terrestre</strong>. En Aculco encontramos aves, mamíferos, reptiles e insectos que dependen del bosque.</p>
+                </div>
+                <div class="card">
+                    <h3>🌡️ Regulación Climática</h3>
+                    <p>Los bosques reducen la temperatura local entre <strong>2 y 8 grados</strong>. Además, capturan CO₂ y producen oxígeno vital para nuestra respiración.</p>
+                </div>
+                <div class="card">
+                    <h3>🌱 Suelo Fértil</h3>
+                    <p>Las raíces previenen la erosión y las hojas que caen aportan nutrientes al suelo, mejorando la fertilidad para futuras generaciones.</p>
+                </div>
+            </div>
+
+            <div class="card highlight">
+                <h3>🔥 Impacto de los Incendios Forestales</h3>
+                <p><strong>⚠️ Dato alarmante:</strong> 98% de los incendios son provocados por el ser humano</p>
+                <p><strong>Principales causas en Aculco:</strong> Quemas agrícolas, fogatas mal apagadas, cigarros</p>
+            </div>
+
+            <div class="card">
+                <h2>🤝 ¿Qué puedes hacer tú?</h2>
+                <ul>
+                    <li><strong>Participar</strong> en jornadas de reforestación comunitaria</li>
+                    <li><strong>Educar</strong> a tu familia sobre especies nativas</li>
+                    <li><strong>Cuidar</strong> los árboles ya plantados</li>
+                    <li><strong>Denunciar</strong> tala ilegal y quemas forestales</li>
+                    <li><strong>Evitar</strong> el uso de fuego en zonas forestales</li>
+                    <li><strong>No tirar</strong> basura en bosques y áreas naturales</li>
+                    <li><strong>Respetar</strong> las áreas protegidas</li>
+                </ul>
+            </div>
+
+            <div class="card highlight center">
+                <p style="font-size: 1.1rem; font-style: italic;">
+                    "No heredamos la tierra de nuestros padres, la tomamos prestada de nuestros hijos."<br>
+                    <strong>— Proverbio Indígena</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN MAPAS -->        <section id="mapas" class="seccion">
+            <div class="hero" style="background: linear-gradient(135deg, #00BCD4 0%, #4DD0E1 100%);">
+                <h1>🗺️ Mapas de Ubicación</h1>
+                <p>Conoce nuestras comunidades en el municipio de Aculco</p>
+            </div>
+
+            <div class="map-card">
+                <h3>🌿 San Lucas Totolmaloya</h3>
+                <div class="location-info">
+                    <p><strong>📍 Ubicación:</strong> Comunidad comprometida con la reforestación, parte de las zonas forestales protegidas de Aculco.</p>
+                    <p><strong>🌲 Importancia:</strong> Área clave para proyectos de plantación de especies nativas y conservación de manantiales.</p>
+                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d146607.98725887414!2d-99.93210293480037!3d20.168447506129002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d3a9de22501035%3A0xc08fc2c70d804c84!2s50396%20San%20Lucas%20Totolmaloya%2C%20M%C3%A9x.!5e1!3m2!1ses-419!2smx!4v1776705466483!5m2!1ses-419!2smx" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="map-card">
+                <h3>⛪ Santa María Nativitas</h3>
+                <div class="location-info">
+                    <p><strong>📍 Ubicación:</strong> Comunidad ubicada en la región centro del municipio, con tradición agrícola y forestal.</p>
+                    <p><strong>🌲 Importancia:</strong> Zona con bosques de pino-encino que contribuyen a la captación de agua y prevención de erosión.</p>
+                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d73339.89391351714!2d-99.81866636608112!3d20.09191275531893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d3ac91b63820f1%3A0x40067551e8d5fa46!2s50376%20Santa%20Mar%C3%ADa%20Nativitas%2C%20M%C3%A9x.!5e1!3m2!1ses-419!2smx!4v1776705434309!5m2!1ses-419!2smx" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="map-card">
+                <h3>🏘️ Gunyo Centro</h3>
+                <div class="location-info">
+                    <p><strong>📍 Ubicación:</strong> Comunidad con servicios básicos y actividades mixtas agrícolas-forestales.</p>
+                    <p><strong>🌲 Importancia:</strong> Participa activamente en jornadas de reforestación y protección de áreas naturales del municipio.</p>
+                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36665.66773296781!2d-99.85049935778994!3d20.110183601105735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d3aba3f4ddd601%3A0xaffdaeb59a047e52!2s50380%20Gunyo%20Centro%2C%20M%C3%A9x.!5e1!3m2!1ses-419!2smx!4v1776705294426!5m2!1ses-419!2smx" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="card highlight center mt-2">
+                <p><strong>📍 ¿Quieres más información?</strong></p>
+                <p>Visita la Dirección de Ecología para obtener mapas detallados de todas las zonas de reforestación en Aculco.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN FORMULARIO -->
+        <section id="formulario" class="seccion">
+            <div class="hero" style="background: linear-gradient(135deg, #E91E63 0%, #F06292 100%);">
+                <h1>📝 Evaluación de Conocimientos</h1>
+                <p>Demuestra lo que aprendiste sobre reforestación y medio ambiente</p>
+            </div>
+
+            <div class="card">
+                <h2>📋 ¿Qué evaluará este formulario?</h2>
+                <p>
+                    Este cuestionario evalúa tus conocimientos sobre: especies nativas de Aculco, técnicas de plantación,                     beneficios de los bosques, prevención de incendios y acciones para el cuidado del medio ambiente.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Temas que se evalúan</h2>
+                <ul>
+                    <li><strong>🌲 Especies nativas:</strong> Pino, Encino, Ocote, Madroño</li>
+                    <li><strong>🔧 Técnicas de plantación:</strong> Cepa 40x40 cm, borde de retención, riego</li>
+                    <li><strong>💧 Beneficios de bosques:</strong> Agua, clima, biodiversidad, suelo</li>
+                    <li><strong>🔥 Incendios:</strong> 98% provocados por humanos, prevención</li>
+                    <li><strong>📅 Temporada ideal:</strong> Mayo-Septiembre (lluvias)</li>
+                    <li><strong>♻️ Acciones ambientales:</strong> Hábitos para cuidar el medio ambiente</li>
+                </ul>
+            </div>
+
+            <div class="form-container">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSeFRGgdLgthE0wWS7d6VgbSZZdNYsuZh8usfoWQjI8QcDMPtg/viewform?embedded=true" 
+                    title="Formulario de Evaluación">
+                    Cargando formulario...
+                </iframe>
+                
+                <div id="formError" class="form-fallback">
+                    <h3 style="color: #E65100;">⚠️ El formulario no está disponible</h3>
+                    <p>Esto puede deberse a restricciones de privacidad o necesitas iniciar sesión en Google.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeFRGgdLgthE0wWS7d6VgbSZZdNYsuZh8usfoWQjI8QcDMPtg/viewform" 
+                       target="_blank" 
+                       class="btn-open">
+                       📋 Abrir Formulario en Nueva Pestaña
+                    </a>
+                </div>
+            </div>
+
+            <div class="card highlight center">
+                <p><strong>💡 Consejo:</strong> Revisa las secciones de la página si tienes dudas antes de responder.</p>
+                <p><strong>🎓 ¡Tu conocimiento ayuda a proteger nuestros bosques!</strong></p>
+            </div>
+
+            <div class="card center">
+                <p><strong>📞 ¿Dudas?</strong></p>
+                <p><strong>Dirección de Ecología - Aculco</strong></p>
+                <p>📍 Calle Alfonso Díaz de la Vega #03, Aculco</p>
+                <p>🕐 Lunes a Viernes 9:00 - 17:00 hrs</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->    <footer>
+        <h3>🌐 Síguenos en nuestras redes</h3>
+        <p>
+            <a href="https://facebook.com" target="_blank">📘 Facebook</a>
+            <a href="https://instagram.com" target="_blank">📷 Instagram</a>
+            <a href="https://twitter.com" target="_blank">🐦 Twitter</a>
+        </p>
+        <p class="mt-2">© 2026 <strong>EPO 165 San Lucas Totolmaloya</strong> - Reduciendo nuestra Huella 🌍</p>
+        <p><small>Dirección de Ecología - Municipio de Aculco, Estado de México</small></p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Función para mostrar secciones
+        function mostrarSeccion(idSeccion) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.seccion').forEach(sec => {
+                sec.classList.remove('activa');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(idSeccion).classList.add('activa');
+            
+            // Actualizar tabs activas
+            document.querySelectorAll('nav ul li a').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activar el tab correspondiente
+            const tab = document.getElementById('tab-' + idSeccion);
+            if (tab) tab.classList.add('active');
+            
+            // Si es sección del dropdown, activar botón
+            if (['vivero', 'biodiversidad', 'mapas', 'formulario'].includes(idSeccion)) {
+                document.querySelector('.dropdown-btn').classList.add('active');
+            } else {
+                document.querySelector('.dropdown-btn').classList.remove('active');
+            }
+            
+            // Cerrar dropdown
+            closeDropdown();
+            
+            // Scroll al inicio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Funciones del dropdown
+        function toggleDropdown() {
+            document.getElementById('dropdown-menu').classList.toggle('active');
+        }
+        function closeDropdown() {
+            document.getElementById('dropdown-menu').classList.remove('active');
+            document.querySelector('.dropdown-btn').classList.remove('active');
+        }
+
+        // Cerrar dropdown al hacer clic fuera
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                closeDropdown();
+            }
+        });
+
+        // Detección de error en iframe del formulario
+        setTimeout(() => {
+            const iframe = document.querySelector('.form-container iframe');
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                if (doc.body.innerHTML.includes('No se puede acceder') || 
+                    doc.body.innerHTML.includes('Cuenta de Google')) {
+                    document.getElementById('formError').classList.add('active');
+                    iframe.style.display = 'none';
+                }
+            } catch(e) {
+                // Error de CORS - mostrar fallback
+                document.getElementById('formError').classList.add('active');
+                iframe.style.display = 'none';
+            }
+        }, 6000);
+
+        // Inicializar: mostrar inicio por defecto
+        document.addEventListener('DOMContentLoaded', () => {
+            mostrarSeccion('inicio');
+        });
+    </script>
+
+</body>
+</html>
